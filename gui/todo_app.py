@@ -11,7 +11,7 @@ class TodoApp:
         self.root.geometry("500x600")
         self.root.configure(bg="#f0f0f0")
 
-        self.task = []
+        self.tasks = []
         self.load_tasks()
 
         self.create_widgets()
@@ -120,6 +120,41 @@ class TodoApp:
             fg='#666666'
         )
         self.status_label.pack(pady=5)
+
+    def add_task(self):
+        task_text = self.task_entry.get().strip()
+        if task_text:
+            task = {
+                'text': task_text,
+                'completed': False,
+                'created': datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+            }
+            self.tasks.append(task)
+            self.task_entry.delete(0, tk.END)
+            self.update_task_list()
+            self.save_tasks()
+            self.status_label.config(text=f"task added: {task_text}")
+        else:
+            messagebox.showwarning("Warning", "Please enter a task!")
+
+    def complete_task(self):
+
+    def delete_task(self):
+
+    def clear_all(self):
+
+    def update_task_list(self):
+
+    def save_tasks(self):
+
+    def load_tasks(self):
+        try:
+            if os.path.exists('tasks.json'):
+                with open('tasks.json', 'r') as file:
+                    self.tasks = json.load(file)
+        except Exception as e:
+            messagebox.showerror("Error", f"Error Loading Tasks: {e}")
+            self.tasks = []
 
 def main():
     root = tk.Tk()
