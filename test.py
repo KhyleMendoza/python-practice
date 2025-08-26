@@ -1,5 +1,7 @@
 import time
 import os
+import json
+from datetime import datetime, timedelta
 
 #loop
 # pizza = 100
@@ -89,6 +91,8 @@ import os
 # odd_numbers = [x for x in range(22) if x % 2 != 0]
 # print(odd_numbers)
 
+
+
 #exception handling try and except
 # try:
 #     number = int(input("Enter a number: "))
@@ -123,5 +127,30 @@ import os
 # with open(filename, "w") as file:
 #     file.write(content)
 #     file.write("\n write with python.")
-
 # print(f"File '{filename}' Created Successfully!")
+
+#create file with json
+# person = {"name": "khyle", "age": 22, "city": "Mabalacat"}
+# json_string = json.dumps(person)
+
+# with open("person.json", "w") as file:
+#     json.dump(person, file)
+
+# with open("person.json", "r") as file:
+#     data = json.load(file)
+#     print(data)
+
+#current date and time
+# now = datetime.now()
+# print("Current date and time: ", now)
+
+# tommorow = now + timedelta(days=1)
+# print("Tommorow Date and time: ", tommorow)
+
+# last_week = now - timedelta(weeks=1)
+# print("Last week date and time: ", last_week)
+
+# date_string = "2025-08-26"
+# parsed_date = datetime.strptime(date_string, "%Y-%m-%d")
+# print("Parsed Date: ", parsed_date)
+
