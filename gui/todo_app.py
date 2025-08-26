@@ -55,7 +55,7 @@ class TodoApp:
         list_frame = tk.Frame(self.root, bg='#f0f0f0')
         list_frame.pack(pady=10, padx=20, fill='both', expand=True)
 
-        listbox_frame = tk.frame = tk.Frame(list_frame, bg='#f0f0f0')
+        listbox_frame = tk.Frame(list_frame, bg='#f0f0f0')
         listbox_frame.pack(fill='both', expand=True)
 
         self.task_listbox = tk.Listbox(
@@ -66,6 +66,7 @@ class TodoApp:
             bd=1,
             height=15,
         )
+        self.task_listbox.pack(side='left', fill='both', expand=True)
 
         scrollbar = tk.Scrollbar(listbox_frame, orient='vertical')
         scrollbar.pack(side='right', fill='y')
@@ -138,24 +139,67 @@ class TodoApp:
             messagebox.showwarning("Warning", "Please enter a task!")
 
     def complete_task(self):
+        selection = self.task_listbox.curselection()
+        if selection:
+            index = selection[0]
+            if index < len(self.tasks):
+                self.tasks[index]['completed'] = not self.tasks[index]['completed']
+                self.update_task_list()
+                self.save_tasks()
+                status = "completed" if self.tasks[index]['completed'] else "uncompleted"
+                self.status_label.config(text=f"Task {status}")
+        else:
+            messagebox.showwarning("Warning", "Please select a task!")
 
     def delete_task(self):
+        selection = self.task_listbox.curselection()
+        if selection:
+            index = selection[0]
+            if index < len(self.tasks):
+                deleted_task = self.tasks.pop(index)
+                self.update_task_list()
+                self.save_tasks()
+                self.status_label.config(text=f"Task deleted: {deleted_task['text']}")
+            else:
+                messagebox.showwarning("Warning", "Invalid task selected")
 
     def clear_all(self):
+        if self.tasks:
+            if messagebox.askyesno("Confirm", "Are you sure you want to clear all tasks?"):
+                self.tasks.clear()
+                self.update_task_list()
+                self.save_tasks()
+                self.status_label.config(text="All tasks cleared")
+        else:
+            messagebox.showinfo("Info", "No tasks to clear!")
 
     def update_task_list(self):
+        self.task_listbox.delete(0, tk.END)
+        for i, task in enumerate(self.tasks):
+            status = '✓' if task['completed'] else "☐ "
+            display_text = f"{status}{task['text']}"
+            if task['completed']:
+                self.task_listbox.insert(tk.END, display_text)
+                self.task_listbox.itemconfig(tk.END, fg='#888888')
+            else:
+                self.task_listbox.insert(tk.END, display_text)
+                self.task_listbox.itemconfig(tk.END, fg='#000000')
 
     def save_tasks(self):
         try:
-            with open('task.json', 'w') as file:
+            # Save alongside this script in the gui folder
+            data_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'tasks.json')
+            with open(data_file, 'w') as file:
                 json.dump(self.tasks, file, indent=2)
         except Exception as e:
             messagebox.showerror("Error", f"Error Saving tasks: {e}")
-            
+
     def load_tasks(self):
         try:
-            if os.path.exists('tasks.json'):
-                with open('tasks.json', 'r') as file:
+            # Load from the gui folder next to this script
+            data_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'tasks.json')
+            if os.path.exists(data_file):
+                with open(data_file, 'r') as file:
                     self.tasks = json.load(file)
         except Exception as e:
             messagebox.showerror("Error", f"Error Loading Tasks: {e}")
