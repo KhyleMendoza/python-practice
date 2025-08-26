@@ -146,7 +146,12 @@ class TodoApp:
     def update_task_list(self):
 
     def save_tasks(self):
-
+        try:
+            with open('task.json', 'w') as file:
+                json.dump(self.tasks, file, indent=2)
+        except Exception as e:
+            messagebox.showerror("Error", f"Error Saving tasks: {e}")
+            
     def load_tasks(self):
         try:
             if os.path.exists('tasks.json'):
