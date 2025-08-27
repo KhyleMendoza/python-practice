@@ -13,13 +13,14 @@ class POS:
         self.products = {}
         self.admin_password = "admin123"
         self.cart = {}
+        self.script_dir = os.path.dirname(os.path.abspath(__file__))
+        self.products_file = os.path.join(self.script_dir, 'products.json')
         self.load_products()
     
     def load_products(self):
-        """Load products from file if it exists"""
-        if os.path.exists('products.json'):
+        if os.path.exists(self.products_file):
             try:
-                with open('products.json', 'r') as f:
+                with open(self.products_file, 'r') as f:
                     data = json.load(f)
                     self.products = data
             except:
@@ -33,12 +34,10 @@ class POS:
             self.save_products()
     
     def save_products(self):
-        """Save products to file"""
-        with open('products.json', 'w') as f:
+        with open(self.products_file, 'w') as f:
             json.dump(self.products, f, indent=4)
     
     def admin_login(self):
-        """Admin login function"""
         attempts = 3
         while attempts > 0:
             password = input("Enter admin password: ")
@@ -52,7 +51,6 @@ class POS:
         return False
     
     def admin_menu(self):
-        """Admin menu with product management"""
         while True:
             print("\n=== ADMIN MENU ===")
             print("1. Add Product")
@@ -81,13 +79,12 @@ class POS:
                 print("Invalid choice. Please try again.")
     
     def add_product(self):
-        """Add a new product"""
         print("\n=== ADD PRODUCT ===")
         name = input("Enter product name: ")
         try:
             price = float(input("Enter product price: ₱"))
             stock = int(input("Enter initial stock: "))
-
+            
             product_id = str(len(self.products) + 1)
             while product_id in self.products:
                 product_id = str(int(product_id) + 1)
@@ -103,7 +100,6 @@ class POS:
             print("Invalid input. Please enter valid numbers.")
     
     def update_price(self):
-        """Update product price"""
         print("\n=== UPDATE PRODUCT PRICE ===")
         self.view_all_products()
         
@@ -120,7 +116,6 @@ class POS:
             print("Product not found.")
     
     def update_stock(self):
-        """Update product stock"""
         print("\n=== UPDATE PRODUCT STOCK ===")
         self.view_all_products()
         
@@ -137,7 +132,6 @@ class POS:
             print("Product not found.")
     
     def remove_product(self):
-        """Remove a product"""
         print("\n=== REMOVE PRODUCT ===")
         self.view_all_products()
         
@@ -153,7 +147,6 @@ class POS:
             print("Product not found.")
     
     def view_all_products(self):
-        """Display all products"""
         print("\n=== ALL PRODUCTS ===")
         if not self.products:
             print("No products available.")
@@ -165,7 +158,6 @@ class POS:
             print(f"{product_id:<5} {product['name']:<20} ₱{product['price']:<9} {product['stock']:<10}")
     
     def customer_menu(self):
-        """Customer shopping menu"""
         self.cart = {}
         
         while True:
@@ -207,7 +199,6 @@ class POS:
                 print(f"{product_id:<5} {product['name']:<20} ₱{product['price']:<9} {product['stock']:<10}")
     
     def add_to_cart(self):
-        """Add product to cart"""
         self.view_products_customer()
         
         product_id = input("Enter product ID to add to cart: ")
@@ -231,7 +222,6 @@ class POS:
             print("Product not found.")
     
     def view_cart(self):
-        """Display current cart"""
         print("\n=== YOUR CART ===")
         if not self.cart:
             print("Your cart is empty.")
@@ -251,7 +241,6 @@ class POS:
         print(f"Total: ₱{total:.2f}")
     
     def remove_from_cart(self):
-        """Remove item from cart"""
         if not self.cart:
             print("Your cart is empty.")
             return
@@ -274,7 +263,6 @@ class POS:
             print("Product not in cart.")
     
     def checkout(self):
-        """Process checkout"""
         if not self.cart:
             print("Your cart is empty.")
             return
@@ -293,11 +281,11 @@ class POS:
             print("Purchase completed successfully!")
     
     def generate_receipt(self):
-        """Generate and save receipt"""
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         filename = f"receipt_{timestamp}.txt"
+        receipt_path = os.path.join(self.script_dir, filename)
         
-        with open(filename, 'w') as f:
+        with open(receipt_path, 'w') as f:
             f.write("=== RECEIPT ===\n")
             f.write(f"Date: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
             f.write("-" * 30 + "\n")

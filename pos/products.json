@@ -1,0 +1,17 @@
+{
+    "1": {
+        "name": "Bread",
+        "price": 25.0,
+        "stock": 20
+    },
+    "2": {
+        "name": "Milk",
+        "price": 30.0,
+        "stock": 15
+    },
+    "3": {
+        "name": "Eggs",
+        "price": 45.0,
+        "stock": 30
+    }
+}
