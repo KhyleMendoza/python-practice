@@ -1,0 +1,17 @@
+To Build(run on first time on project):
+pip install pyinstaller
+
+Install Command(to build desktop application):
+pyinstaller BIR_Validity_Checker.spec
+
+the desktop application will be stored in folder
+dist/BIR_Validity_Checker_v2.exe
+
+validations will be stored in
+C:\POS_BIR\ReferenceValidityDate
+
+Logs will be stored in
+C:\POS_BIR\BIRPermitLogs
+
+To run(for debugging):
+python datepicker.py
