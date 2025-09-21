@@ -172,6 +172,7 @@
 # balance /= 2
 # print(f"Your balance is {balance}")
 
+##if statement
 # if balance >= 100:
 #     print("You are rich")
 # elif balance > 0 and balance <= 99:
@@ -179,7 +180,23 @@
 # else:
 #     print("You are broke")
 
-#while loop
+# #calculator example
+# operation = input("Enter the operation(+, -, *, /): ")
+# num1 = float(input("Enter the first number: "))
+# num2 = float(input("Enter the second number: "))
+
+# if operation == "+":
+#     print(f"{num1 + num2}")
+# elif operation == "-":
+#     print(f"{num1 - num2}")
+# elif operation == "*":
+#     print(f"{num1 * num2}")
+# elif operation == "/":
+#     print(f"{num1 / num2}")
+# else:
+#     print("Invalid Operation!")
+
+##while loop
 # while True:
 #     print("Welcome to shop")
 #     print("1. Pizza - 100")
