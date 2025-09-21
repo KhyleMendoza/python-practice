@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <h1>BIR Validity Checker</h1>
+    
+    <label>Start Date: <input type="date" id="start"></label>
+    <label>End Date: <input type="date" id="end"></label>
+    <button onclick="save()">Save</button>
+
+    <script>
+        function save() {
+            const startDate = document.getElementById('start').value;
+            const endDate = document.getElementById('end').value;
+
+            if (!startDate || !endDate) {
+                alert('Please select both start and end dates');
+                return;
+            }
+            
+            if (new Date(endDate) < new Date(startDate)) {
+                alert('End date cannot be before start date');
+                return;
+            }
+            
+            const daysDiff = Math.ceil((new Date(endDate) - new Date(startDate)) / (1000 * 60 * 60 * 24));
+            if (daysDiff > 14) {
+                alert('POS BIR validity date accepts 15 days validity only');
+                return;
+            }
+
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            if (new Date(endDate) < today) {
+                alert('Date Out of Range');
+                return;
+            }
+            
+            const start = startDate.replace(/-/g, '');
+            const end = endDate.replace(/-/g, '');
+            const content = [start, end].sort().join('\n');
+            
+            const a = document.createElement('a');
+            a.href = 'data:text/plain,' + content;
+            a.download = 'ReferenceValidityDate.txt';
+            a.click();
+            
+            document.getElementById('start').value = '';
+            document.getElementById('end').value = '';
+        }
+    </script>
+</body>
+</html>

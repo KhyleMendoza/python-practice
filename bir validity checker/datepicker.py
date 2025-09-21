@@ -211,6 +211,8 @@ class BIRValidityChecker:
 
             start_date_obj = datetime.strptime(start_date, "%Y-%m-%d")
             end_date_obj = datetime.strptime(end_date, "%Y-%m-%d")
+            today = datetime.now().date()
+            
             date_difference = (end_date_obj - start_date_obj).days
             
             if date_difference < 0:
@@ -219,6 +221,10 @@ class BIRValidityChecker:
             
             if date_difference > 14:
                 messagebox.showerror("BIR Validity Error", "POS BIR validity date accepts 15 days validity only.")
+                return
+            
+            if end_date_obj.date() < today:
+                messagebox.showerror("Date Out of Range", "Date Out of Range")
                 return
             
             notepad_file = os.path.join(self.save_location, "ReferenceValidityDate.txt")
