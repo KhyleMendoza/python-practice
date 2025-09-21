@@ -251,7 +251,54 @@
 # laptop.display()
 # mouse.display()
 
+##single product example
 # name = input("Enter product name: ")
 # price = float(input("Enter product price: "))
 # product = Product(name, price)
 # product.display()
+
+##multiple product example
+# products = {
+#     "laptop": 15000,
+#     "mouse": 1000,
+#     "keyboard": 1500,
+# }
+
+# print("Current products:")
+# for name, price in products.items():
+#     print(f"{name}: ₱{price}")
+
+# name = input("Enter product name: ")
+# price = float(input("Enter product price: "))
+# products[name.lower()] = price
+
+# print("\nUpdated products:")
+# for name, price in products.items():
+#     print(f"{name}: ₱{price}")
+
+# # Multiple products using class
+# class Product:
+#     def __init__(self, name, price):
+#         self.name = name
+#         self.price = price
+    
+#     def display(self):
+#         print(f"{self.name}: ₱{self.price}")
+
+# products = [
+#     Product("Laptop", 15000),
+#     Product("Mouse", 1000),
+#     Product("Keyboard", 1500)
+# ]
+
+# print("Current products:")
+# for product in products:
+#     product.display()
+
+# name = input("Enter product name: ")
+# price = float(input("Enter product price: "))
+# new_product = Product(name, price)
+# products.append(new_product)
+
+# for product in products:
+#     product.display()
