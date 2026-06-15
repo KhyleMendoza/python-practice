@@ -1,6 +1,9 @@
 To Build(run on first time on project):
 pip install pyinstaller
 
+//make spec
+pyi-makespec -w -n BIR_Validity_Checker_v2 datepicker.py
+
 Install Command(to build desktop application):
 pyinstaller BIR_Validity_Checker.spec
 
